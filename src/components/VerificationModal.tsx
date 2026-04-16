@@ -6,10 +6,13 @@ interface VerificationModalProps {
 }
 
 const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${
+        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
+      aria-hidden={!isOpen}
+    >
       <div
         className="absolute inset-0 backdrop-blur-xl bg-black/70"
         onClick={onClose}
