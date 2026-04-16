@@ -6,18 +6,39 @@ interface VerificationModalProps {
   onClose: () => void;
 }
 
+declare global {
+  interface Window {
+    call_locker?: () => void;
+  }
+}
+
 const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
   useEffect(() => {
-    if (isOpen && typeof window !== "undefined") {
+    if (!isOpen || typeof window === "undefined") return;
+
+    const existingScript = document.querySelector(
+      'script[src="https://spyhexa.com/cp/js/n0208"]'
+    );
+
+    const runLocker = () => {
+      if (typeof window.call_locker === "function") {
+        window.call_locker();
+      }
+    };
+
+    if (!existingScript) {
       const script = document.createElement("script");
       script.src = "https://spyhexa.com/cp/js/n0208";
       script.type = "text/javascript";
       script.async = true;
+      script.onload = () => {
+        setTimeout(() => runLocker(), 300);
+      };
       document.body.appendChild(script);
 
-      return () => {
-        document.body.removeChild(script);
-      };
+      return () => {};
+    } else {
+      setTimeout(() => runLocker(), 300);
     }
   }, [isOpen]);
 
@@ -48,3 +69,4 @@ const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
 };
 
 export default VerificationModal;
+
