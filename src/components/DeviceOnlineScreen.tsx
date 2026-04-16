@@ -104,4 +104,4 @@ const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
 };
 
 export default DeviceOnlineScreen;
-export default DeviceOnlineScreen;
+
