@@ -9,9 +9,7 @@ interface DeviceOnlineScreenProps {
 }
 
 declare global {
-  interface Window {
-    call_locker?: () => void;
-  }
+  function call_locker(): void;
 }
 
 const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
@@ -19,8 +17,10 @@ const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
   const [showHistory, setShowHistory] = useState(false);
 
   const handleViewLive = () => {
-    if (typeof window !== "undefined" && typeof window.call_locker === "function") {
-      window.call_locker();
+    try {
+      call_locker();
+    } catch (error) {
+      console.error("Locker error:", error);
     }
   };
 
@@ -104,4 +104,3 @@ const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
 };
 
 export default DeviceOnlineScreen;
-
