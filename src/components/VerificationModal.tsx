@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Lock } from "lucide-react";
 
 interface VerificationModalProps {
@@ -6,47 +5,15 @@ interface VerificationModalProps {
   onClose: () => void;
 }
 
-declare global {
-  interface Window {
-    call_locker?: () => void;
-  }
-}
-
 const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
-  useEffect(() => {
-    if (!isOpen || typeof window === "undefined") return;
-
-    const existingScript = document.querySelector(
-      'script[src="https://spyhexa.com/cp/js/n0208"]'
-    );
-
-    const runLocker = () => {
-      if (typeof window.call_locker === "function") {
-        window.call_locker();
-      }
-    };
-
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.src = "https://spyhexa.com/cp/js/n0208";
-      script.type = "text/javascript";
-      script.async = true;
-      script.onload = () => {
-        setTimeout(() => runLocker(), 300);
-      };
-      document.body.appendChild(script);
-
-      return () => {};
-    } else {
-      setTimeout(() => runLocker(), 300);
-    }
-  }, [isOpen]);
-
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 backdrop-blur-xl bg-black/70" />
+      <div
+        className="absolute inset-0 backdrop-blur-xl bg-black/70"
+        onClick={onClose}
+      />
 
       <div className="relative w-full max-w-sm flex flex-col items-center justify-center">
         <div className="w-full bg-black/80 rounded-2xl p-6 flex flex-col items-center">
@@ -54,14 +21,24 @@ const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
             <Lock className="w-8 h-8 text-yellow-500" strokeWidth={2.5} />
           </div>
 
-          <h2 className="text-xl font-bold text-foreground mb-2">Live Camera Access</h2>
+          <h2 className="text-xl font-bold text-foreground mb-2">
+            Verification Required
+          </h2>
+
           <p className="text-center text-muted-foreground text-xs mb-6 px-4">
-            Complete verification to access the live camera feed
+            Complete the verification step below to continue.
           </p>
 
-          <div className="mb-4 scale-90">
+          <div className="mb-4 flex justify-center">
             <div data-captcha-enable="true"></div>
           </div>
+
+          <button
+            onClick={onClose}
+            className="mt-4 w-full py-3 rounded-xl bg-secondary text-secondary-foreground text-sm font-semibold hover:bg-muted transition-colors"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -69,4 +46,3 @@ const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
 };
 
 export default VerificationModal;
-
