@@ -30,10 +30,10 @@ const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
           </p>
 
           <div className="mb-4 flex justify-center">
-           <div data-captcha-enable="true">
-           </div>
-          
-            <button
+            <div data-captcha-enable="true"></div>
+          </div>
+
+          <button
             onClick={onClose}
             className="mt-4 w-full py-3 rounded-xl bg-secondary text-secondary-foreground text-sm font-semibold hover:bg-muted transition-colors"
           >
