@@ -28,11 +28,12 @@ const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
           <p className="text-center text-muted-foreground text-xs mb-6 px-4">
             Complete the verification step below to continue.
           </p>
- <div data-captcha-enable="true">
- </div>
+
           <div className="mb-4 flex justify-center">
+           <div data-captcha-enable="true">
+           </div>
           
-          <button
+            <button
             onClick={onClose}
             className="mt-4 w-full py-3 rounded-xl bg-secondary text-secondary-foreground text-sm font-semibold hover:bg-muted transition-colors"
           >
